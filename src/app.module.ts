@@ -2,11 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
+import { TournamentsModule } from './modules/tournaments/tournaments.module';
+import { ResultsModule } from './modules/results/results.module';
+import { PlayersModule } from './modules/players/players.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Hacer que ConfigModule esté disponible en toda la aplicación
+      isGlobal: true, // Make ConfigModule available throughout the application
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -16,9 +19,12 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
-      synchronize: true, // // No recomendado en producción, pero útil en desarrollo
+      synchronize: true, // Not recommended in production, but useful in development
     }),
-    AuthModule
+    AuthModule,
+    TournamentsModule,
+    ResultsModule,
+    PlayersModule
   ],
 
 })
