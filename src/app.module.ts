@@ -3,8 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TournamentsModule } from './modules/tournaments/tournaments.module';
-import { ResultsModule } from './modules/results/results.module';
 import { PlayersModule } from './modules/players/players.module';
+import { ResultsModule } from './modules/results/results.module';
 
 @Module({
   imports: [
@@ -23,8 +23,8 @@ import { PlayersModule } from './modules/players/players.module';
     }),
     AuthModule,
     TournamentsModule,
+    PlayersModule,
     ResultsModule,
-    PlayersModule
   ],
 
 })

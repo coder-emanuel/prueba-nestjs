@@ -14,7 +14,7 @@ export class AuthService {
     }
 
     async login(loginDto: LoginDto) {
-        const payLoad = { email: loginDto.email, sub: 1, role: 'user'}; //  Ajusta el sub con el ID del usuario
+        const payLoad = { email: loginDto.email, sub: 1, role: 'user'};
         return {
             access_token: this.jwtService.sign(payLoad),
         };
