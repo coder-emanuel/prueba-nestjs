@@ -23,7 +23,7 @@ export class CreateResultDto {
     @Min(0)
     playerBScore: number;
 
-    // Constructor para facilitar la creación de instancias del DTO
+    // Constructor to facilitate the creation of DTO instances
     constructor(
         tournamentId: string,
         playerAId: string,
