@@ -15,8 +15,8 @@ describe('AuthController', () => {
         {
           provide: AuthService,
           useValue: {
-            register: jest.fn().mockResolvedValue({ id: 1, email: 'test@example.com', role: 'user' }),
-            login: jest.fn().mockResolvedValue({ access_token: 'mocked_token', role: 'user' }),
+            register: jest.fn().mockResolvedValue({ id: 1, email: 'test@example.com', role: 'admin' }),
+            login: jest.fn().mockResolvedValue({ access_token: 'mocked_token', role: 'admin' }),
           },
         },
       ],
@@ -31,12 +31,12 @@ describe('AuthController', () => {
       const registerDto: RegisterDto = {
         email: 'test@example.com',
         password: 'password123',
-        role: 'user',
+        role: 'admin',
       };
 
       const result = await authController.register(registerDto);
 
-      expect(result).toEqual({ id: 1, email: 'test@example.com', role: 'user' });
+      expect(result).toEqual({ id: 1, email: 'test@example.com', role: 'admin' });
       expect(authService.register).toHaveBeenCalledWith(registerDto);
     });
   });
@@ -50,7 +50,7 @@ describe('AuthController', () => {
 
       const result = await authController.login(loginDto);
 
-      expect(result).toEqual({ access_token: 'mocked_token', role: 'user' });
+      expect(result).toEqual({ access_token: 'mocked_token', role: 'admin' });
       expect(authService.login).toHaveBeenCalledWith(loginDto);
     });
   });

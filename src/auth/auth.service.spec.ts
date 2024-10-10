@@ -37,7 +37,7 @@ describe('AuthService', () => {
       const registerDto: RegisterDto = {
         email: 'test@example.com',
         password: 'password123',
-        role: 'user',
+        role: 'admin',
       };
 
       (bcrypt.hash as jest.Mock) = jest.fn().mockResolvedValue('hashed_password');
@@ -61,7 +61,7 @@ describe('AuthService', () => {
       expect(jwtService.sign).toHaveBeenCalledWith({
         email: 'test@example.com',
         sub: 1,
-        role: 'user',
+        role: 'admin',
       });
       expect(result).toEqual({ access_token: 'mocked_token' });
     });

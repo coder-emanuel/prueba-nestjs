@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Result } from '../../results/entities/result.entity';
 
 @Entity()
 export class Player {
@@ -10,4 +11,16 @@ export class Player {
 
     @Column()
     team: string;
+
+    @Column()
+    age: number;
+
+    @Column()
+    nationality: string;
+
+    @OneToMany(() => Result, result => result.playerA)
+    resultsAsPlayerA: Result[];
+  
+    @OneToMany(() => Result, result => result.playerB)
+    resultsAsPlayerB: Result[];
 }

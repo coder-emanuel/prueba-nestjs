@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreatePlayerDto {
     @IsNotEmpty()
@@ -8,4 +8,12 @@ export class CreatePlayerDto {
     @IsNotEmpty()
     @IsString()
     team: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    age: number;
+
+    @IsNotEmpty()
+    @IsString()
+    nationality: string;
 }

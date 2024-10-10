@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, CreateDateColumn } from 'typeorm';
+import { Result } from '../../results/entities/result.entity';
 
 @Entity()
 export class Tournament {
@@ -11,6 +12,9 @@ export class Tournament {
     @Column()
     format: string;
 
-    @Column()
-    createdAt: string;
+    @CreateDateColumn()
+    createdAt: Date;
+
+    @OneToMany(() => Result, result => result.tournament)
+    results: Result[];
 }

@@ -3,7 +3,9 @@ import { PlayersService } from './players.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('players')
 @Controller('players')
 // @UseGuards(JwtAuthGuard) //Protect all endpoints on this controller
 export class PlayersController {
