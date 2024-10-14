@@ -1,6 +1,5 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
 import { Response } from 'express';
-import { QueryFailedError } from 'typeorm';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -9,28 +8,27 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest();
 
- 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message: string | object = 'Internal server error';
 
-  
     if (exception instanceof HttpException) {
       status = exception.getStatus();
       message = exception.getResponse();
-    } 
-   
-    else if (exception instanceof QueryFailedError) {
-      status = HttpStatus.BAD_REQUEST; 
-      message = this.getTypeOrmErrorMessage(exception);
-    } 
-
-    else if (exception instanceof Error) {
+    } else if (this.isMysqlError(exception)) {
+      const mysqlError = exception as any; 
+      switch (mysqlError.code) {
+        case 'ER_DUP_ENTRY':
+          status = HttpStatus.CONFLICT;
+          message = 'Error de clave duplicada';
+          break;
+        default:
+          message = 'Error de base de datos MySQL';
+      }
+    } else if (exception instanceof Error) {
       message = exception.message;
     }
 
-
     console.error('Exception:', exception);
-
 
     response.status(status).json({
       statusCode: status,
@@ -40,7 +38,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     });
   }
 
-  private getTypeOrmErrorMessage(exception: QueryFailedError): string {
-    return exception.message;
+  private isMysqlError(exception: unknown): boolean {
+    return exception && typeof exception === 'object' && 'code' in (exception as object) && 'sqlMessage' in (exception as object);
   }
 }

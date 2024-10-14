@@ -3,11 +3,12 @@ import { ResultService } from './results.service';
 import { CreateResultDto } from './dto/create-result.dto';  
 import { UpdateResultDto } from './dto/update-result.dto';  
 import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('results')
+@UseGuards(JwtAuthGuard) //Protect all endpoints on this controller
+@ApiBearerAuth()
 @Controller('results')
-// @UseGuards(JwtAuthGuard) //Protect all endpoints on this controller
 export class ResultsController {
     constructor(private readonly resultsService: ResultService) {}
 

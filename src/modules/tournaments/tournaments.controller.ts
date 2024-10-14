@@ -3,11 +3,12 @@ import { TournamentsService } from './tournaments.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('tournaments')
+@UseGuards(JwtAuthGuard) //Protect all endpoints on this controller
+@ApiBearerAuth()
 @Controller('tournaments')
-// @UseGuards(JwtAuthGuard) //Protect all endpoints on this controller
 export class TournamentsController {
     constructor(private readonly tournamentsService: TournamentsService) { }
 
